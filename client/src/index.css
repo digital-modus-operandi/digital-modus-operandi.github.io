@@ -715,7 +715,8 @@ button {
   border-top: 1px solid var(--border);
 }
 .outcome-card {
-  position: relative;
+  display: flex;
+  flex-direction: column;
   min-height: 195px;
   border-right: 1px solid var(--border);
   padding: 20px 24px 24px 0;
@@ -749,10 +750,14 @@ button {
   max-width: 180px;
   line-height: 1.4;
 }
+/* Стрелка стоит в потоке, а не поверх карточки: при абсолютном
+   позиционировании она ложилась на последнюю строку описания везде, где
+   текст занимал всю ширину — то есть на всех экранах уже её 1024px. */
 .outcome-card svg {
-  position: absolute;
-  right: 25px;
-  bottom: 26px;
+  flex: none;
+  align-self: flex-end;
+  margin-top: auto;
+  padding-top: 20px;
   color: #788172;
 }
 .outcome-card-accent strong,
@@ -1458,19 +1463,34 @@ button {
 }
 .contact-links {
   display: grid;
+  /* Колонка по умолчанию тянется до max-content, то есть до длины самой
+     длинной ссылки, и тогда процентный max-width у ссылки считается от этой
+     же переросшей колонки — ограничение не срабатывает. minmax(0, 1fr)
+     привязывает колонку к ширине контейнера. */
+  grid-template-columns: minmax(0, 1fr);
   gap: 14px;
 }
 .contact-links a {
   display: inline-flex;
-  align-items: center;
+  /* По верхнему краю, а не по центру: на узком экране строка переносится,
+     и центрированная иконка повисала бы посреди двух строк. */
+  align-items: flex-start;
   gap: 10px;
+  /* max-content держит подчёркивание по длине текста, но без ограничения
+     сверху длинная строка уезжает за край экрана и молча обрезается.
+     `min-width: 0` обязателен: ссылка — элемент грида, а он по умолчанию
+     не даёт себя сжать уже содержимого, и `max-width` остался бы без силы. */
   width: max-content;
+  max-width: 100%;
+  min-width: 0;
   color: #aeb8a5;
   font: 11px var(--font-mono);
+  line-height: 1.5;
   border-bottom: 1px solid rgba(199, 255, 69, 0.35);
   padding-bottom: 5px;
 }
 .contact-links a svg {
+  flex: none;
   color: var(--lime);
 }
 .contact-form {
@@ -1613,6 +1633,7 @@ textarea:focus-visible,
 .services-grid > *,
 .outcome-grid > *,
 .cases-list > *,
+.contact-layout > *,
 .extra-cases-list > *,
 .case-page-body > * {
   min-width: 0;
@@ -2180,9 +2201,34 @@ textarea:focus-visible,
     border-bottom: 1px solid var(--border);
     padding: 20px 0;
   }
+  /* В одну колонку текст занимает всю ширину, и стрелке внизу справа
+     остаётся только край экрана — она там теряется. Поднимаем её в строку
+     с кодом: место справа от короткой метки всё равно пустует. */
+  .outcome-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 16px;
+    align-items: center;
+  }
+  .outcome-card .mono {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .outcome-card svg {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+    padding: 0;
+  }
   .outcome-card strong {
+    grid-column: 1 / -1;
+    grid-row: 2;
     margin-top: 26px;
     font-size: 34px;
+  }
+  .outcome-card p {
+    grid-column: 1 / -1;
+    grid-row: 3;
   }
   .outcome-card:last-child {
     border-bottom: 0;

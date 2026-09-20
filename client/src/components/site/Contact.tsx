@@ -255,7 +255,8 @@ export default function Contact() {
                 })
               }
             >
-              <Send size={17} aria-hidden="true" /> Написать человеку —{" "}
+              <Send size={17} aria-hidden="true" /> Написать менеджеру в
+              телеграм —{" "}
               {brand.telegramPerson}
             </a>
             <a
