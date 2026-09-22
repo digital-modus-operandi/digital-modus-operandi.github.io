@@ -138,6 +138,7 @@ export const organizationJsonLd = {
   url: SITE_URL,
   description:
     "Разработка B2B-сайтов, каталогов, личных кабинетов и внутренних CRM-систем с интеграцией в CRM, ERP и складской учёт.",
+  email: "Digital-Modus-Operandi.2026@yandex.ru",
   sameAs: ["https://t.me/Arseniy_Karpenko"],
   knowsAbout: [
     "B2B-сайты и каталоги",

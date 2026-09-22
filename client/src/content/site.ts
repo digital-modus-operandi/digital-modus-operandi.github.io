@@ -9,10 +9,9 @@ export const brand = {
   telegramPerson: "@Arseniy_Karpenko",
   telegramPersonUrl: "https://t.me/Arseniy_Karpenko",
   /**
-   * Запасной адрес на случай технического сбоя формы. Почтовый ящик ещё не
-   * заведён — адрес поставлен клиентом как заглушка до его настройки.
+   * Запасной адрес на случай технического сбоя формы.
    */
-  email: "hello@dmo.agency",
+  email: "Digital-Modus-Operandi.2026@yandex.ru",
   location: "Кишинёв / Комрат / remote",
 };
 
