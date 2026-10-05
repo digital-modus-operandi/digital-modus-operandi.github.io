@@ -48,7 +48,14 @@ export default function Home() {
           {[...marqueeWords, ...marqueeWords].map((word, index) => (
             <Fragment key={`${word}-${index}`}>
               <span>{word}</span>
-              <i>✳</i>
+              <svg className="marquee-star" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M12 2v20M2 12h20M5 5l14 14M19 5L5 19"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  fill="none"
+                />
+              </svg>
             </Fragment>
           ))}
         </div>
