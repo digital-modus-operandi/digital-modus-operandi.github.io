@@ -1,0 +1,73 @@
+# Автодеплой сайта на GitHub Pages.
+# Ничего настраивать в файле не нужно: адрес и базовый путь определяются сами
+# по имени аккаунта и репозитория.
+#
+# Включить один раз: репозиторий → Settings → Pages → Source: GitHub Actions.
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Test
+        run: pnpm test
+
+      - name: Build
+        run: |
+          OWNER="$(echo "${GITHUB_REPOSITORY_OWNER}" | tr '[:upper:]' '[:lower:]')"
+          REPO="${GITHUB_REPOSITORY#*/}"
+          REPO_LC="$(echo "${REPO}" | tr '[:upper:]' '[:lower:]')"
+          if [ "${REPO_LC}" = "${OWNER}.github.io" ]; then
+            # Сайт пользователя: https://<user>.github.io/
+            export VITE_BASE_PATH="/"
+            export VITE_SITE_URL="https://${OWNER}.github.io"
+          else
+            # Сайт проекта: https://<user>.github.io/<repo>/
+            export VITE_BASE_PATH="/${REPO}/"
+            export VITE_SITE_URL="https://${OWNER}.github.io/${REPO}"
+          fi
+          echo "Base path: ${VITE_BASE_PATH}"
+          echo "Site URL:  ${VITE_SITE_URL}"
+          pnpm build
+          # Запасная страница для несуществующих адресов (показывает «404» сайта).
+          cp dist/public/index.html dist/public/404.html
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

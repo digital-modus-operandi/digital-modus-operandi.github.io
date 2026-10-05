@@ -1,3 +1,4 @@
+import { withBase } from "@/lib/base";
 import type { TeamMember } from "./types";
 
 export const teamIntro = {
@@ -20,7 +21,7 @@ export const team: TeamMember[] = [
     bio: "Основатель DMO и первый, с кем вы разговариваете. Отвечает за продажи, поиск и привлечение клиентов, развитие партнёрств.",
     skills: ["sales", "clients", "partnerships"],
     portrait: "portrait-d",
-    image: "/team/arseniy.webp",
+    image: withBase("/team/arseniy.webp"),
     imageAlt: "Арсений — основатель DMO, отвечает за продажи и клиентов",
   },
   {
@@ -30,7 +31,7 @@ export const team: TeamMember[] = [
     bio: "10 лет ведёт маркетинговые проекты. Отвечает за то, чтобы договорённости превращались в план работ, сроки и понятный результат, а не в переписку без итога.",
     skills: ["project", "process", "communication"],
     portrait: "portrait-c",
-    image: "/team/matvey.webp",
+    image: withBase("/team/matvey.webp"),
     imageAlt: "Матвей — проджект-менеджер DMO",
   },
   {
@@ -40,7 +41,7 @@ export const team: TeamMember[] = [
     bio: "Строит то, что продолжает работать без присмотра: AI-пайплайны, фоновые очереди, интеграции с Telegram и внешними сервисами. Повторные попытки, ограничение нагрузки и разграничение доступа закладывает до запуска, а не после первого сбоя.",
     skills: ["ai", "automation", "pipelines", "backend"],
     portrait: "portrait-a",
-    image: "/team/boris.webp",
+    image: withBase("/team/boris.webp"),
     imageAlt: "Борис — отвечает за AI-интеграции и внутренние системы DMO",
   },
   {
@@ -50,7 +51,7 @@ export const team: TeamMember[] = [
     bio: "Собирает продукт целиком — каталог, заказы, оплату, админку и личные кабинеты. Доводит до состояния, в котором заказчик управляет системой сам, а AI работает внутри сценария, а не отдельной кнопкой.",
     skills: ["fullstack", "product", "ecommerce", "checkout"],
     portrait: "portrait-b",
-    image: "/team/nikita.webp",
+    image: withBase("/team/nikita.webp"),
     imageAlt: "Никита — full-stack разработчик DMO",
   },
 ];

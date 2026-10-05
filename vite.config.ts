@@ -215,6 +215,33 @@ const SITE_URL = (process.env.VITE_SITE_URL || "https://digital-modus-operandi.v
   "",
 );
 
+/**
+ * Базовый путь сайта. "/" для корня домена, "/<repo>/" для GitHub Pages проекта.
+ * В CI задаётся переменной VITE_BASE_PATH (см. .github/workflows/pages.yml).
+ */
+const BASE_PATH = (() => {
+  const raw = (process.env.VITE_BASE_PATH || "/").trim();
+  const withLeading = raw.startsWith("/") ? raw : `/${raw}`;
+  return withLeading.endsWith("/") ? withLeading : `${withLeading}/`;
+})();
+
+const DEFAULT_SITE_URL = "https://digital-modus-operandi.vercel.app";
+
+/**
+ * В client/index.html canonical, og:url и og:image записаны с адресом по
+ * умолчанию. Главная не проходит через prerender, поэтому без этой подмены
+ * поисковики и соцсети увидели бы старый адрес. Подмена идёт только при сборке.
+ */
+function siteUrlInHtmlPlugin(): Plugin {
+  return {
+    name: "dmo-site-url-in-html",
+    apply: "build",
+    transformIndexHtml(html) {
+      return html.split(DEFAULT_SITE_URL).join(SITE_URL);
+    },
+  };
+}
+
 function seoAssetsPlugin(): Plugin {
   const urls = ["/", "/cases", ...publishedCases.map((item) => `/cases/${item.slug}`)];
 
@@ -295,6 +322,7 @@ export default defineConfig(({ command }) => ({
           vitePluginStorageProxy(),
         ]
       : []),
+    siteUrlInHtmlPlugin(),
     seoAssetsPlugin(),
     dropDevPublicAssetsPlugin(),
     seoPrerenderPlugin(SITE_URL),
@@ -306,6 +334,7 @@ export default defineConfig(({ command }) => ({
       "@assets": path.resolve(import.meta.dirname, "attached_assets"),
     },
   },
+  base: BASE_PATH,
   envDir: path.resolve(import.meta.dirname),
   root: path.resolve(import.meta.dirname, "client"),
   build: {

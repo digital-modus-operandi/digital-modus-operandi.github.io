@@ -10,6 +10,7 @@ import { Link, useLocation } from "wouter";
 import { useSiteChrome } from "@/hooks/useSiteChrome";
 import { track } from "@/lib/analytics";
 import { brand, footer, navItems, primaryCta } from "@/content/site";
+import { withBase } from "@/lib/base";
 
 /** Off-screen but still read by screen readers — no CSS file changes needed. */
 const srOnly: CSSProperties = {
@@ -89,7 +90,7 @@ export default function SiteShell({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [menuOpen]);
 
-  const anchor = (href: string) => (isHome ? href : `/${href}`);
+  const anchor = (href: string) => (isHome ? href : withBase(`/${href}`));
 
   return (
     <div className="site-shell">
@@ -223,16 +224,13 @@ export default function SiteShell({
               </span>
             ))}
           </p>
-          <a className="footer-cta" href={anchor("#contact")}>
+          <a className="footer-cta" href={`mailto:${brand.email}`}>
             {primaryCta} <ArrowUpRight size={18} />
           </a>
         </div>
         <div className="footer-bottom">
-          <span>© 2026 {brand.name} ({brand.legalName}, IDNO: {brand.idno})</span>
-          <div className="footer-legal-links" style={{ display: "flex", gap: "1rem", fontSize: "0.85rem" }}>
-            <Link href="/privacy" style={{ opacity: 0.8, textDecoration: "underline" }}>Конфиденциальность</Link>
-            <Link href="/terms" style={{ opacity: 0.8, textDecoration: "underline" }}>Условия использования</Link>
-          </div>
+          <span>© 2026 {brand.name}</span>
+          <span className="mono">{brand.tagline}</span>
           <div className="socials">
             <a
               href={brand.telegramPersonUrl}
