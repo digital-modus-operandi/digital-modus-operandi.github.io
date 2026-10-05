@@ -158,6 +158,24 @@ export function buildRoutes(siteUrl: string): PrerenderRoute[] {
         "Проекты DMO: CRM для производственной компании, e-commerce-платформа с самостоятельным управлением каталогом, EdTech-платформа с европейским финансированием и коммерческий AI-продукт.",
       ogType: "website",
     },
+    {
+      // Mirrors client/src/pages/Privacy.tsx
+      path: "/privacy",
+      file: path.join("privacy", "index.html"),
+      title: "Политика конфиденциальности — Digital Modus Operandi",
+      description:
+        "Информация об обработке и защите персональных данных в соответствии с Законом Республики Молдова № 133/2011.",
+      ogType: "website",
+    },
+    {
+      // Mirrors client/src/pages/Terms.tsx
+      path: "/terms",
+      file: path.join("terms", "index.html"),
+      title: "Условия использования — Digital Modus Operandi",
+      description:
+        "Правила использования сайта, права на материалы и порядок предоставления информации Digital Modus Operandi.",
+      ogType: "website",
+    },
   ];
 
   // Mirrors client/src/pages/CaseDetail.tsx

@@ -228,8 +228,11 @@ export default function SiteShell({
           </a>
         </div>
         <div className="footer-bottom">
-          <span>© 2026 {brand.name}</span>
-          <span className="mono">{brand.tagline}</span>
+          <span>© 2026 {brand.name} ({brand.legalName}, IDNO: {brand.idno})</span>
+          <div className="footer-legal-links" style={{ display: "flex", gap: "1rem", fontSize: "0.85rem" }}>
+            <Link href="/privacy" style={{ opacity: 0.8, textDecoration: "underline" }}>Конфиденциальность</Link>
+            <Link href="/terms" style={{ opacity: 0.8, textDecoration: "underline" }}>Условия использования</Link>
+          </div>
           <div className="socials">
             <a
               href={brand.telegramPersonUrl}

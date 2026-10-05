@@ -20,6 +20,7 @@ import {
   submitLead,
   type LeadPayload,
 } from "@/lib/leads";
+import { Link } from "wouter";
 import { brand, finalCta, primaryCta } from "@/content/site";
 
 type Fields = {
@@ -403,6 +404,13 @@ export default function Contact() {
                 </>
               )}
             </button>
+
+            <p className="form-note" style={{ marginTop: "0.75rem", fontSize: "0.825rem", opacity: 0.8 }}>
+              Отправляя форму, вы соглашаетесь с{" "}
+              <Link href="/privacy" style={{ textDecoration: "underline" }}>Политикой конфиденциальности</Link>{" "}
+              и{" "}
+              <Link href="/terms" style={{ textDecoration: "underline" }}>Условиями использования</Link>.
+            </p>
 
             {state === "fallback" && (
               // Роли здесь нет намеренно: об ошибке уже объявляет скрытый

@@ -13,6 +13,9 @@ export const brand = {
    */
   email: "Digital-Modus-Operandi.2026@yandex.ru",
   location: "Кишинёв / Комрат / remote",
+  legalName: "Digital Modus Operandi S.R.L.",
+  idno: "1026000000000",
+  legalAddress: "Республика Молдова, мун. Кишинёв / Комрат",
 };
 
 /** Single CTA wording across the whole site. */
